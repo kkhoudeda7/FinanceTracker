@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../css/LoginSignup.css';
 
 function LoginSignup({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,12 +16,14 @@ function LoginSignup({ onLogin }) {
         const response = await axios.post('http://localhost:3001/login', { username, password });
         if (response.status === 200) {
           onLogin();
+          navigate('/dashboard');
         }
       } else {
         const response = await axios.post('http://localhost:3001/signup', { username, password });
         if (response.status === 201) {
           alert('Signup successful');
           setIsLogin(true);
+          navigate('/login');
         }
       }
     } catch (error) {
@@ -27,7 +32,7 @@ function LoginSignup({ onLogin }) {
   };
 
   return (
-    <div className="p-4 border rounded shadow-sm">
+    <div className="login-signup-container">
       <h2>{isLogin ? 'Login' : 'Signup'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
