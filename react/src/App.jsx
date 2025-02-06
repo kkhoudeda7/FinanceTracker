@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import List from './components/List';
 import Form from './components/Form';
 import Filter from './components/Filter';
+import LoginSignup from './components/LoginSignup';
 import './App.css';
 
 function App() {
-  const [entries, setEntries] = useState([
-    { id: 1, category: 'Food', description: 'Groceries', amount: 50 },
-    { id: 2, category: 'Transport', description: 'Bus Ticket', amount: 2.5 },
-    { id: 3, category: 'Entertainment', description: 'Movie', amount: 12 },
-  ]);
+  const [entries, setEntries] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const addEntry = (entry) => {
     setEntries([...entries, { id: entries.length + 1, ...entry }]);
@@ -26,16 +24,26 @@ function App() {
 
   const categories = [...new Set(entries.map((entry) => entry.category))];
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
     <>
       <h1>Finance Budget Tracker</h1>
-      <Filter
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategoryChange={handleCategoryChange}
-      />
-      <Form onAddEntry={addEntry} />
-      <List entries={filteredEntries} />
+      {isAuthenticated ? (
+        <>
+          <Filter
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={handleCategoryChange}
+          />
+          <Form onAddEntry={addEntry} />
+          <List entries={filteredEntries} />
+        </>
+      ) : (
+        <LoginSignup onLogin={handleLogin} />
+      )}
     </>
   );
 }

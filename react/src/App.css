@@ -12,8 +12,9 @@ h1 {
 
 .table {
   margin-top: 20px;
-  width: 100%;
+  max-width: 500px;
   border-collapse: collapse;
+  
 }
 
 .table th, .table td {
@@ -32,4 +33,21 @@ h1 {
 
 .table tr:hover {
   background-color: #e2e6ea;
+}
+
+form{
+  max-width: 500px;
+  margin: auto;
+}
+
+form .form-label {
+  font-weight: bold;
+}
+
+form .form-control {
+  border-radius: 0.25rem;
+}
+
+form .btn {
+  margin-top: 1rem;
 }
