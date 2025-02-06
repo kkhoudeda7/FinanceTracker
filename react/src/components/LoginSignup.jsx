@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function LoginSignup({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLogin) {
-      if (username === 'user' && password === 'password') {
-        onLogin();
+    try {
+      if (isLogin) {
+        const response = await axios.post('http://localhost:3001/login', { username, password });
+        if (response.status === 200) {
+          onLogin();
+        }
       } else {
-        alert('Invalid credentials');
+        const response = await axios.post('http://localhost:3001/signup', { username, password });
+        if (response.status === 201) {
+          alert('Signup successful');
+          setIsLogin(true);
+        }
       }
-    } else {
-      alert('Signup successful');
-      setIsLogin(true);
+    } catch (error) {
+      alert(error.response.data.message);
     }
   };
 

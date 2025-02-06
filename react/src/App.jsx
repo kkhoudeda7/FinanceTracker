@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <h1>Finance Budget Tracker</h1>
+      <h1 style={{ fontFamily: 'inherit', fontWeight: 'bold' }}>Finance Budget Tracker</h1>
       {isAuthenticated ? (
         <>
           <Filter
