@@ -9,15 +9,30 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
-  const [entries, setEntries] = useState([]);
+
+
+  const [entries, setEntries] = useState(() => {
+    const savedEntries = localStorage.getItem('entries');
+    return savedEntries ? JSON.parse(savedEntries) : [];
+  });
+
+
+
   const [selectedCategory, setSelectedCategory] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem('isAuthenticated') === 'true'
+
   );
 
   useEffect(() => {
+    localStorage.setItem('entries', JSON.stringify(entries));
+  }, [entries]);
+
+  useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
+
   }, [isAuthenticated]);
+
 
   const addEntry = (entry) => {
     setEntries([...entries, { id: entries.length + 1, ...entry }]);
