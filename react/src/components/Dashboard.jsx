@@ -3,7 +3,7 @@ import Filter from './Filter';
 import Form from './Form';
 import List from './List';
 
-function Dashboard({ categories, selectedCategory, onCategoryChange, addEntry, filteredEntries, onLogout }) {
+function Dashboard({ categories, selectedCategory, onCategoryChange, addEntry, filteredEntries, onDelete, onLogout }) {
   return (
     <div>
       <button onClick={onLogout} className="btn btn-danger">Logout</button>
@@ -13,9 +13,9 @@ function Dashboard({ categories, selectedCategory, onCategoryChange, addEntry, f
         onCategoryChange={onCategoryChange}
       />
       <Form onAddEntry={addEntry} />
-      <List entries={filteredEntries} />
+      <List entries={filteredEntries} onDelete={onDelete} />
     </div>
   );
 }
 
-export default Dashboard;
+export default Dashboard;c

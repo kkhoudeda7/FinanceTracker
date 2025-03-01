@@ -46,3 +46,16 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
+
+app.delete('/entries/:id', (req,res) => {
+  const id = req.params.id;
+  db.run('DELETE FROM entries WHERE id = ?', [id], function(err) {
+    if (err) {
+      res.status(500).send({ message: err.message });
+    } else {
+      res.status(200).send({ message: 'Entry deleted successfully' });
+    }
+  });
+}
+);

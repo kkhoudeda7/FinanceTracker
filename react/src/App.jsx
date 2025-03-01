@@ -7,21 +7,17 @@ import Filter from './components/Filter';
 import LoginSignup from './components/LoginSignup';
 import Dashboard from './components/Dashboard';
 import './App.css';
+import axios from 'axios';
 
 function App() {
-
-
   const [entries, setEntries] = useState(() => {
     const savedEntries = localStorage.getItem('entries');
     return savedEntries ? JSON.parse(savedEntries) : [];
   });
 
-
-
   const [selectedCategory, setSelectedCategory] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem('isAuthenticated') === 'true'
-
   );
 
   useEffect(() => {
@@ -30,9 +26,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-
   }, [isAuthenticated]);
-
 
   const addEntry = (entry) => {
     setEntries([...entries, { id: entries.length + 1, ...entry }]);
@@ -57,6 +51,15 @@ function App() {
     localStorage.removeItem('isAuthenticated');
   };
 
+  const deleteEntry = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/entries/${id}`);
+      setEntries(entries.filter((entry) => entry.id !== id));
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -73,6 +76,7 @@ function App() {
                 onCategoryChange={handleCategoryChange}
                 addEntry={addEntry}
                 filteredEntries={filteredEntries}
+                onDelete={deleteEntry}
                 onLogout={handleLogout}
               />
             }

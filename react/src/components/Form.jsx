@@ -33,9 +33,23 @@ function Form({ onAddEntry }) {
           <option value="Food">Food</option>
           <option value="Transport">Transport</option>
           <option value="Entertainment">Entertainment</option>
-        
+          <option value="Other">Other</option>
         </select>
       </div>
+      {category === 'Other' && (
+        <div className="mb-3">
+          <label htmlFor="otherCategory" className="form-label">Other Category</label>
+          <input
+            type="text"
+            id="otherCategory"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="form-control"
+            placeholder="Enter the category"
+            required
+          />
+        </div>
+      )}
       <div className="mb-3">
         <label htmlFor="description" className="form-label">Description</label>
         <input
